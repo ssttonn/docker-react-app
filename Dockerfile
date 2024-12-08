@@ -1,6 +1,6 @@
 FROM node:22.11.0-alpine as builder
 
-WORKDIR '/sample_app'
+WORKDIR '/sample_app_prod'
 
 COPY package*.json .
 
@@ -14,4 +14,4 @@ FROM nginx
 
 WORKDIR '/sample_app_prod'
 EXPOSE 80
-COPY --from=builder ./sample_app/build /usr/share/nginx/html
+COPY --from=builder ./sample_app_prod/build /usr/share/nginx/html
