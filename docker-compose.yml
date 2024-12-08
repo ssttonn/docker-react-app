@@ -1,18 +1,8 @@
+version: "3"
 services:
-  sample-app-dev:
+  prod:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-    volumes:
-      - /sample_app/node_modules
-      - ./:/sample_app
-  sample-app-test:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    volumes:
-      - /sample_app/node_modules
-      - .:/sample_app
-    command: ["npm", "run", "test"]
+      - "80:80"
