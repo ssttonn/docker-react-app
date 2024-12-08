@@ -8,10 +8,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker build -t astrotify/react-test -f Dockerfile.dev .
-      - run: docker run -e CI=true astrotify/react-test npm test
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      - name: Login to Docker
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build Docker Container  
+        run: docker build -t astrotify/react-test -f Dockerfile.dev .
+      - name: Run test for Docker Container
+        run: docker run -e CI=true astrotify/react-test npm test
 
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
@@ -19,6 +23,8 @@ jobs:
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v18
         with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: docker-react-app
           environment_name: Docker-react-app-env
           existing_bucket_name: elasticbeanstalk-ap-southeast-2-339712796583
