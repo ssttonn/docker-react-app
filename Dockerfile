@@ -13,4 +13,5 @@ CMD ["npm", "run", "build"]
 FROM nginx
 
 WORKDIR '/sample_app_prod'
+EXPOSE 80
 COPY --from=builder ./sample_app/build /usr/share/nginx/html
