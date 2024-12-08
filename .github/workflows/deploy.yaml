@@ -29,5 +29,5 @@ jobs:
           environment_name: Docker-react-app-env
           existing_bucket_name: elasticbeanstalk-ap-southeast-2-339712796583
           region: ap-southeast-2
-          version_label: 12345
+          version_label: Sample
           deployment_package: deploy.zip
